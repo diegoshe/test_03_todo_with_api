@@ -1,0 +1,29 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+/front/.vscode
+
+#--------------------- FRONT ----------
+
+# dependencies
+/front/todo_list/node_modules
+/front/todo_list/.pnp
+/front/todo_list/.pnp.js
+
+# testing
+/front/todo_list/coverage
+
+# production
+/front/todo_list/build
+
+# misc
+/front/todo_list/.DS_Store
+/front/todo_list/.env.local
+/front/todo_list/.env.development.local
+/front/todo_list/.env.test.local
+/front/todo_list/.env.production.local
+
+/front/todo_list/npm-debug.log*
+/front/todo_list/yarn-debug.log*
+/front/todo_list/yarn-error.log*
+
+#---------------------- BACK -----------
