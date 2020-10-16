@@ -5,25 +5,25 @@
 #--------------------- FRONT ----------
 
 # dependencies
-/front/todo_list/node_modules
-/front/todo_list/.pnp
-/front/todo_list/.pnp.js
+/front/node_modules
+/front/.pnp
+/front/.pnp.js
 
 # testing
-/front/todo_list/coverage
+/front/coverage
 
 # production
-/front/todo_list/build
+/front/build
 
 # misc
-/front/todo_list/.DS_Store
-/front/todo_list/.env.local
-/front/todo_list/.env.development.local
-/front/todo_list/.env.test.local
-/front/todo_list/.env.production.local
+/front/.DS_Store
+/front/.env.local
+/front/.env.development.local
+/front/.env.test.local
+/front/.env.production.local
 
-/front/todo_list/npm-debug.log*
-/front/todo_list/yarn-debug.log*
-/front/todo_list/yarn-error.log*
+/front/npm-debug.log*
+/front/yarn-debug.log*
+/front/yarn-error.log*
 
 #---------------------- BACK -----------
