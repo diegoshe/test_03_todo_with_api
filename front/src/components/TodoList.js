@@ -1,18 +1,29 @@
 import React, { useState } from 'react'
+
 import TodoForm from './TodoForm'
 import Todo from './Todo'
+import TodosService from '../api/TodosService'
+
+
+const todosService = new TodosService()
 
 
 function TodoList() {
     const [todos, setTodos] = useState([])
 
+    todosService.getTodos().then(function (result) {
+        // setTodos({ todos:  result.data, nextPageURL:  result.nextlink})
+        // setTodos(result.data)
+        console.log(result.data)
+    });
+
     const addTodo = todo => {
         if (!todo.text || /^s*$/.test(todo.text)) {
             return 
         }
-
+        // console.log(todo)
         const newTodos = [todo, ...todos]
-
+        // console.log(newTodos)
         setTodos(newTodos)
     }
 

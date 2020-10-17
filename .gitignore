@@ -27,3 +27,6 @@
 /front/yarn-error.log*
 
 #---------------------- BACK -----------
+/back/.vscode
+/back/*.sqlite3
+/back/todo_list/migrations
