@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import TodoForm from './TodoForm'
 import Todo from './Todo'
@@ -9,22 +9,36 @@ const todosService = new TodosService()
 
 
 function TodoList() {
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [todos, setTodos] = useState([])
 
-    todosService.getTodos().then(function (result) {
-        // setTodos({ todos:  result.data, nextPageURL:  result.nextlink})
-        // setTodos(result.data)
-        console.log(result.data)
-    });
+    useEffect(() => {
+        todosService.getTodos()
+        .then((result) => {
+            // setTodos({ todos:  result.data, nextPageURL:  result.nextlink})
+            setIsLoaded(true)
+            setTodos((result.data).reverse())
+            // console.log(result.data)
+        },
+        (error) => {
+            setIsLoaded(true);
+            setError(error);
+          }
+        )
+    }, [])
 
     const addTodo = todo => {
         if (!todo.text || /^s*$/.test(todo.text)) {
             return 
         }
-        // console.log(todo)
-        const newTodos = [todo, ...todos]
-        // console.log(newTodos)
-        setTodos(newTodos)
+
+        todosService.createTodo({'text': todo.text})
+        .then((result) => {
+            setTodos([result.data, ...todos])
+            // console.log(result)
+        })
+        .catch(() => {alert('Упс, что-то пошло не так')})
     }
 
     const updateTodo = (todoId, newValue) => {
@@ -32,13 +46,21 @@ function TodoList() {
             return 
         }
 
-        setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
+        todosService.updateTodo({'pk':todoId, 'text':newValue.text})
+        .then((result) => {
+            setTodos(prev => prev.map(item => (item.id === todoId ? result.data : item)))
+        })
+        .catch(() => {alert('Упс, что-то пошло не так')})
     }
 
     const removeTodo = id => {
         const removeArr = [...todos].filter(todo => todo.id !== id)
 
-        setTodos(removeArr)
+        todosService.deleteTodo(id)
+        .then(() => {
+            setTodos(removeArr)
+        })
+        .catch(() => {alert('Упс, что-то пошло не так')})
     }
 
     const completeTodo = id => {
@@ -51,18 +73,30 @@ function TodoList() {
         setTodos(updatedTodos)
     }
 
-    return (
-        <>
-            <h1>Какие планы на сегодня?</h1>
-            <TodoForm onSubmit={addTodo} />
-            <Todo
-                todos={todos}
-                completeTodo={completeTodo}
-                updateTodo={updateTodo}
-                removeTodo={removeTodo}
-            />
-        </>
-    )
+    if (error) {
+        return <div className='error'>Ошибка: {error.message}</div>;
+    } else if (!isLoaded) {
+        return <div className="preloader">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+            <div class="circle circle-4"></div>
+            <div class="circle circle-5"></div>
+      </div>
+    } else {
+        return (
+            <>
+                <h1>Какие планы на сегодня?</h1>
+                <TodoForm onSubmit={addTodo} />
+                <Todo
+                    todos={todos}
+                    completeTodo={completeTodo}
+                    updateTodo={updateTodo}
+                    removeTodo={removeTodo}
+                />
+            </>
+        )
+    }
 }
 
 export default TodoList

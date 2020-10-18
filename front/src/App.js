@@ -1,5 +1,6 @@
 import React from 'react'
-import './App.css'
+
+import './App.scss'
 import TodoList from './components/TodoList'
 
 
@@ -8,7 +9,6 @@ function App() {
         <div className='todo-app'>
             <TodoList />
         </div>
-        
     )
 }
 

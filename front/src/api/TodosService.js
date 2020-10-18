@@ -19,16 +19,16 @@ export default class TodosService{
         const url = `${API_URL}/api/todos/${pk}`;
         return axios.get(url).then(response => response.data);
     }
-    deleteTodo(customer){
-        const url = `${API_URL}/api/todos/${customer.pk}`;
+    deleteTodo(pk){
+        const url = `${API_URL}/api/todos/${pk}`;
         return axios.delete(url);
     }
-    createTodo(customer){
+    createTodo(todo){
         const url = `${API_URL}/api/todos/`;
-        return axios.post(url,customer);
+        return axios.post(url,todo);
     }
-    updateTodo(customer){
-        const url = `${API_URL}/api/todos/${customer.pk}`;
-        return axios.put(url,customer);
+    updateTodo(todo){
+        const url = `${API_URL}/api/todos/${todo.pk}`;
+        return axios.put(url,todo);
     }
 }
